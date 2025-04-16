@@ -58,6 +58,14 @@ const updateBodyValidationPipe = new ZodValidationPipe(updateProductBodySchema);
 
 type UpdateProductBodySchema = z.infer<typeof updateProductBodySchema>;
 
+const updateStatusProductBodySchema = z.object({
+  status: z.string().max(10),
+
+})
+
+const updateStatusBodyValidationPipe = new ZodValidationPipe(updateStatusProductBodySchema);
+
+type UpdateStatusProductBodySchema = z.infer<typeof updateStatusProductBodySchema>;
 
 @Controller("/products")
 export class AppController {
@@ -82,15 +90,15 @@ export class AppController {
 
   }
   
-  @Put()
+  @Put(':id')
   @HttpCode(204)
   update(@Param('id') id: string, @Body(updateBodyValidationPipe) body: UpdateProductBodySchema) {
     
   }
 
-  @Patch('/:id/status')
+  @Patch(':id/status')
   @HttpCode(204)
-  updateStatus(@Param('id') id: string, @Body(updateBodyValidationPipe) body: UpdateProductBodySchema) {
+  updateStatus(@Param('id') id: string, @Body(updateStatusBodyValidationPipe) body: UpdateStatusProductBodySchema) {
 
   }
 
