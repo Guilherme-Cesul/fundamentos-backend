@@ -58,14 +58,22 @@ const updateBodyValidationPipe = new ZodValidationPipe(updateProductBodySchema);
 
 type UpdateProductBodySchema = z.infer<typeof updateProductBodySchema>;
 
+enum Status {
+  APROVADO = "APROVADO",
+  NEGADO = "NEGADO",
+  PENDENTE = "PENDENTE"
+}
+
 const updateStatusProductBodySchema = z.object({
-  status: z.string().max(10),
+    status: z.enum([Status.APROVADO, Status.NEGADO], {
+      message: "Status must be 'APROVADO' or 'NEGADO'."
+    })
+  });
 
-})
+  const updateStatusBodyValidationPipe = new ZodValidationPipe(updateStatusProductBodySchema);
 
-const updateStatusBodyValidationPipe = new ZodValidationPipe(updateStatusProductBodySchema);
+  type UpdateStatusProductBodySchema = z.infer<typeof updateStatusProductBodySchema>;
 
-type UpdateStatusProductBodySchema = z.infer<typeof updateStatusProductBodySchema>;
 
 @Controller("/products")
 export class AppController {
