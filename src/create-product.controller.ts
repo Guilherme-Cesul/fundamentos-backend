@@ -2,14 +2,15 @@ import { Body, Controller, HttpCode, Post } from "@nestjs/common";
 import { any, z } from "zod";
 import { ZodValidationPipe } from "./pipes/zod-validation-pipe";
 import { CreateProductService } from "./create-product.service";
+import { Category } from "@prisma/client";
 
 const createProductBodySchema = z.object({
-  name: z.string().min(1).max(20),
-  description: z.string().min(5).max(30),
+  name: z.string(),
+  description: z.string().optional(),
   price: z.number(),
   inStock: z.number(),
   isAvailable: z.boolean(),
-  category: z.enum(["ELECTRONIC", "HOME", "OTHER"]),
+  category: z.enum([Category.ELECTRONIC,Category.HOME, Category.OTHER]),
   tags: z.array(z.string()),
 });
 

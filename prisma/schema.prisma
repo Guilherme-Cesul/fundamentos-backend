@@ -14,7 +14,7 @@ datasource db {
 }
 
 enum Category {
-  ELECTRONIC
+  ELECTRONICS
   HOME
   OTHER
 }
