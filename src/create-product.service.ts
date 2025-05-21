@@ -1,33 +1,67 @@
 import { Injectable } from "@nestjs/common";
+import { PrismaService } from "prisma.service";
+import { ProductsRepository } from "./products.repository";
+import { Category } from "@prisma/client";
+
+interface Product {
+  id: string;
+  name: string;
+  description?: string;
+  price: number;
+  inStock: number;
+  isAvailable: Boolean;
+  category: Category;
+  tags: string[];
+  createdAt: Date;
+  updtatedAt: Date;
+}
 
 interface CreateProductServiceRequest {
   name: string;
-  model: string;
-  dateManufacture: string;
-  year: string;
-  brand: string;
-  email: string;
-  cpf: string;
+  description?: string;
+  price: number;
+  inStock: number;
+  isAvailable: boolean;
+  category: Category;
+  tags: string[];
 }
 
 type CreateProductServiceResponse = {
-  product: CreateProductService;
+  product: Product;
 };
 
 @Injectable()
 export class CreateProductService {
-  constructor() { }
+  constructor(private productsRepository: ProductsRepository) {}
 
   async execute({
     name,
-    model,
-    dateManufacture,
-    year,
-    brand,
-    email,
-    cpf
+    description,
+    price,
+    inStock,
+    isAvailable,
+    category,
+    tags
 
   }: CreateProductServiceRequest): Promise<CreateProductServiceResponse> {
-    return null;
+  const productWithSameName = await this.productsRepository.findByName(name);
+
+  if (productWithSameName) {
+    throw new Error("Product already exists");
+  }
+
+  const product = {
+    name,
+    description,
+    price,
+    inStock,
+    isAvailable,
+    category,
+    tags
+  }
+
+  await this.productsRepository.create(product)
+
+    return new Promise(() => product);
   }
 }
