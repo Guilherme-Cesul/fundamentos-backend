@@ -14,7 +14,7 @@ datasource db {
 }
 
 enum Category {
-  ELECTRONICS
+  ELECTRONIC
   HOME
   OTHER
 }
@@ -43,4 +43,14 @@ model User {
   updatedAt DateTime? @updatedAt @map("updated_at")
 
   @@map("users")
+}
+
+model Model {
+  id   String @id @default(uuid())
+  name String @unique
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("models")
 }

@@ -35,7 +35,7 @@ export class CreateProductController {
       tags 
     } = body;
 
-    await this.createProduct.execute({
+    const product = await this.createProduct.execute({
       name,
       description,
       price,
@@ -44,5 +44,9 @@ export class CreateProductController {
       category,
       tags,
     });
+
+    return {
+      product
+    };
   }
 }
