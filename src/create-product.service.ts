@@ -40,26 +40,25 @@ export class CreateProductService {
     inStock,
     isAvailable,
     category,
-    tags
-
+    tags,
   }: CreateProductServiceRequest): Promise<CreateProductServiceResponse> {
-  const productWithSameName = await this.productsRepository.findByName(name);
+    const productWithSameName = await this.productsRepository.findByName(name);
 
-  if (productWithSameName) {
-    throw new Error("Product already exists");
-  }
+    if (productWithSameName) {
+      throw new Error("Product already exists");
+    }
 
-  const product = {
-    name,
-    description,
-    price,
-    inStock,
-    isAvailable,
-    category,
-    tags
-  }
+    const product = {
+      name,
+      description,
+      price,
+      inStock,
+      isAvailable,
+      category,
+      tags,
+    };
 
-  const newProduct = await this.productsRepository.create(product)
+    const newProduct = await this.productsRepository.create(product);
 
     return {
       product: {
@@ -72,8 +71,8 @@ export class CreateProductService {
         category,
         tags,
         createdAt: newProduct.createdAt,
-        updatedAt: newProduct.updatedAt
-      }
-    }
+        updatedAt: newProduct.updatedAt,
+      },
+    };
   }
 }

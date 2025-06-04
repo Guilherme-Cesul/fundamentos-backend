@@ -18,16 +18,14 @@ export class CreateModelController {
   @Post()
   @HttpCode(201)
   async handle(@Body(bodyValidationPipe) body: createModelBodySchema) {
-    const { 
-      name
-    } = body;
+    const { name } = body;
 
     const model = await this.createModel.execute({
-      name
+      name,
     });
 
     return {
-      model
+      model,
     };
   }
 }

@@ -21,27 +21,27 @@ export class CreateModelService {
   constructor(private modelsRepository: ModelsRepository) {}
 
   async execute({
-    name
+    name,
   }: CreateModeltServiceRequest): Promise<CreateModelServiceResponse> {
-  const modelWithSameName = await this.modelsRepository.findByName(name);
+    const modelWithSameName = await this.modelsRepository.findByName(name);
 
-  if (modelWithSameName) {
-    throw new Error("Model already exists");
-  }
+    if (modelWithSameName) {
+      throw new Error("Model already exists");
+    }
 
-  const model = {
-    name
-  }
+    const model = {
+      name,
+    };
 
-  const newModel = await this.modelsRepository.create(model)
+    const newModel = await this.modelsRepository.create(model);
 
     return {
       model: {
         id: newModel.id?.toString() || "",
         name,
         createdAt: newModel.createdAt,
-        updatedAt: newModel.updatedAt
-      }
-    }
+        updatedAt: newModel.updatedAt,
+      },
+    };
   }
 }

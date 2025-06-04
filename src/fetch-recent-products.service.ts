@@ -16,15 +16,15 @@ export interface Product {
 }
 
 type FetchRecentProductsServiceResponse = {
-    products: Product[];
-}
+  products: Product[];
+};
 
 @Injectable()
 export class FetchRecentProductsService {
-    constructor(private readonly productsRepository: ProductsRepository) { }
+  constructor(private readonly productsRepository: ProductsRepository) {}
 
-    async execute(): Promise<FetchRecentProductsServiceResponse> {
-        const recentProducts = await this.productsRepository.findMany();
-        return { products: recentProducts }
-    }
+  async execute(): Promise<FetchRecentProductsServiceResponse> {
+    const recentProducts = await this.productsRepository.findMany();
+    return { products: recentProducts };
+  }
 }

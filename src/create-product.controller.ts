@@ -10,7 +10,7 @@ const createProductBodySchema = z.object({
   price: z.number(),
   inStock: z.number(),
   isAvailable: z.boolean(),
-  category: z.enum([Category.ELECTRONIC,Category.HOME, Category.OTHER]),
+  category: z.enum([Category.ELECTRONIC, Category.HOME, Category.OTHER]),
   tags: z.array(z.string()),
 });
 
@@ -25,15 +25,8 @@ export class CreateProductController {
   @Post()
   @HttpCode(201)
   async handle(@Body(bodyValidationPipe) body: CreateProductBodySchema) {
-    const { 
-      name, 
-      description, 
-      price, 
-      inStock, 
-      isAvailable, 
-      category, 
-      tags 
-    } = body;
+    const { name, description, price, inStock, isAvailable, category, tags } =
+      body;
 
     const product = await this.createProduct.execute({
       name,
@@ -46,7 +39,7 @@ export class CreateProductController {
     });
 
     return {
-      product
+      product,
     };
   }
 }
