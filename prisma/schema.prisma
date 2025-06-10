@@ -39,6 +39,8 @@ model User {
   id    String @id @default(uuid())
   email String @unique
 
+  Profile Profile? // 1:1
+
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
 
@@ -46,8 +48,11 @@ model User {
 }
 
 model Profile {
-  id  String  @id @default(uuid())
+  id        String  @id @default(uuid())
   avatarUrl String? @map("avatar_url")
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
