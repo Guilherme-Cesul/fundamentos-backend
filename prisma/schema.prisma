@@ -40,6 +40,7 @@ model User {
   email String @unique
 
   Profile Profile? // 1:1
+  Order Order[] // 1:N
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
@@ -58,6 +59,19 @@ model Profile {
   updatedAt DateTime? @updatedAt @map("updated_at")
 
   @@map("profiles")
+}
+
+model Order {
+  id    String @id @default(uuid())
+  total Float
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("orders")
 }
 
 model Model {
