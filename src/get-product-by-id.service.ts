@@ -15,16 +15,18 @@ export interface Product {
   updatedAt: string | Date | null | undefined;
 }
 
-type FetchRecentProductsServiceResponse = {
-  products: Product[];
+type GetProductByIdServiceResponse = {
+  product: Product | null;
 };
 
 @Injectable()
-export class FetchRecentProductsService {
+export class GetProductByIdService {
   constructor(private readonly productsRepository: ProductsRepository) {}
 
-  async execute(): Promise<FetchRecentProductsServiceResponse> {
-    const recentProducts = await this.productsRepository.findManyRecent();
-    return { products: recentProducts };
+  async execute(id: string): Promise<GetProductByIdServiceResponse> {
+    const product = await this.productsRepository.findById(id);
+    return {
+      product,
+    };
   }
 }

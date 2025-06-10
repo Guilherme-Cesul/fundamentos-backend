@@ -6,9 +6,7 @@ import { PrismaService } from "prisma.service";
 export class ProductsRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findById(
-    id: string
-  ): Promise<Prisma.ProductUncheckedCreateInput | null> {
+  async findById(id: string): Promise<Product | null> {
     const product = this.prisma.product.findUnique({
       where: {
         id,
@@ -30,7 +28,7 @@ export class ProductsRepository {
     return product;
   }
 
-  async findMany(): Promise<Product[]> {
+  async findManyRecent(): Promise<Product[]> {
     const product = await this.prisma.product.findMany();
     return product;
   }
@@ -42,4 +40,35 @@ export class ProductsRepository {
       data: product,
     });
   }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.product.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async updateById(product: Prisma.ProductUncheckedCreateInput): Promise<Prisma.ProductUncheckedCreateInput | null> {
+    const id = product.id;
+    if (!id) return null;
+
+    const productFindById = await this.findById(id);
+    if (!productFindById) return null;
+
+    const updatedProduct = await this.prisma.product.update({
+        where: { id },
+        data: {
+            category: product.category,
+            description: product.description,
+            name: product.name,
+            tags: product.tags,
+            inStock: product.inStock,
+            price: product.price,
+            isAvailable: product.isAvailable
+        }
+    });
+
+    return updatedProduct;
+}
 }

@@ -45,6 +45,16 @@ model User {
   @@map("users")
 }
 
+model Profile {
+  id  String  @id @default(uuid())
+  avatarUrl String? @map("avatar_url")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("profiles")
+}
+
 model Model {
   id   String @id @default(uuid())
   name String @unique
