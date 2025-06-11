@@ -16,6 +16,16 @@ export class UsersRepository {
     return user;
   }
 
+  async findById(id: string): Promise<Prisma.UserUncheckedCreateInput | null> {
+    const user = this.prisma.user.findUnique({
+      where: {
+        id,
+      }
+    });
+
+    return user;
+  }
+
   async save(data: Prisma.UserUncheckedCreateInput): Promise<void> {
     await Promise.all([
       this.prisma.product.update({
@@ -30,6 +40,14 @@ export class UsersRepository {
   async create(user: Prisma.UserUncheckedCreateInput): Promise<Prisma.UserUncheckedCreateInput> {
     return await this.prisma.user.create({
       data: user,
+    });
+  }
+
+  async delete(user: Prisma.UserUncheckedCreateInput): Promise<void> {
+    await this.prisma.user.delete({
+      where: {
+        id: user.id?.toString(),
+      }
     });
   }
 
