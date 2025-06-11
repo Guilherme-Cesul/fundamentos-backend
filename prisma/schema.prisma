@@ -42,8 +42,8 @@ model User {
   id    String @id @default(uuid())
   email String @unique
 
-  Profile Profile? // 1:1
-  Order   Order[] // 1:N
+  profile Profile? // 1:1
+  order   Order[] // 1:N
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
