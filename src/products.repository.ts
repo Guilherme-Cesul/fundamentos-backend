@@ -1,74 +1,59 @@
 import { Injectable } from "@nestjs/common";
-import { Prisma, Product } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { PrismaService } from "prisma.service";
 
 @Injectable()
 export class ProductsRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findById(id: string): Promise<Product | null> {
+  async findManyRecent(): Promise<Prisma.ProductUncheckedCreateInput[] | null> {
+    const products = this.prisma.product.findMany();
+
+    return products;
+  }
+
+  async findById(id: string): Promise<Prisma.ProductUncheckedCreateInput | null> {
     const product = this.prisma.product.findUnique({
       where: {
         id,
-      },
+      }
     });
 
     return product;
   }
 
-  async findByName(
-    name: string
-  ): Promise<Prisma.ProductUncheckedCreateInput | null> {
+  async findByName(name: string): Promise<Prisma.ProductUncheckedCreateInput | null> {
     const product = this.prisma.product.findUnique({
       where: {
         name,
-      },
+      }
     });
 
     return product;
   }
 
-  async findManyRecent(): Promise<Product[]> {
-    const product = await this.prisma.product.findMany();
-    return product;
+  async save(data: Prisma.ProductUncheckedCreateInput): Promise<void> {
+    await Promise.all([
+      this.prisma.product.update({
+        where: {
+          id: data.id?.toString(),
+        },
+        data,
+      }),
+    ]);
   }
 
-  async create(
-    product: Prisma.ProductUncheckedCreateInput
-  ): Promise<Prisma.ProductUncheckedCreateInput> {
+  async create(product: Prisma.ProductUncheckedCreateInput): Promise<Prisma.ProductUncheckedCreateInput> {
     return await this.prisma.product.create({
       data: product,
     });
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(product: Prisma.ProductUncheckedCreateInput): Promise<void> {
     await this.prisma.product.delete({
       where: {
-        id,
-      },
+        id: product.id?.toString(),
+      }
     });
   }
-
-  async updateById(product: Prisma.ProductUncheckedCreateInput): Promise<Prisma.ProductUncheckedCreateInput | null> {
-    const id = product.id;
-    if (!id) return null;
-
-    const productFindById = await this.findById(id);
-    if (!productFindById) return null;
-
-    const updatedProduct = await this.prisma.product.update({
-        where: { id },
-        data: {
-            category: product.category,
-            description: product.description,
-            name: product.name,
-            tags: product.tags,
-            inStock: product.inStock,
-            price: product.price,
-            isAvailable: product.isAvailable
-        }
-    });
-
-    return updatedProduct;
-}
 }

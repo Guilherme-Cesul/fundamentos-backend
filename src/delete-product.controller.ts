@@ -1,13 +1,15 @@
-import { Controller, Delete, HttpCode, Param } from "@nestjs/common";
+import { Controller, Delete, Get, HttpCode, Param } from "@nestjs/common";
 import { DeleteProductService } from "./delete-product.service";
 
-@Controller("/products")
+@Controller('/products/:id')
 export class DeleteProductController {
-  constructor(private readonly service: DeleteProductService) {}
+  constructor(private deleteProduct: DeleteProductService) {}
 
-  @Delete(":id")
-  @HttpCode(200)
-  async handle(@Param("id") id: string): Promise<void> {
-    await this.service.execute(id);
+  @Delete()
+  @HttpCode(204)
+  async handle(@Param("id") id: string) {
+    await this.deleteProduct.execute({
+      id,
+    });
   }
 }

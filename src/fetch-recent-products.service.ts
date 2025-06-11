@@ -1,11 +1,11 @@
-import { Category } from "@prisma/client";
-import { ProductsRepository } from "./products.repository";
 import { Injectable } from "@nestjs/common";
+import { ProductsRepository } from "./products.repository";
+import { Category } from "@prisma/client";
 
 export interface Product {
   id: string;
   name: string;
-  description?: string | null;
+  description?: string;
   price: number;
   inStock: number;
   isAvailable: Boolean;
@@ -17,14 +17,38 @@ export interface Product {
 
 type FetchRecentProductsServiceResponse = {
   products: Product[];
-};
+}
 
 @Injectable()
 export class FetchRecentProductsService {
-  constructor(private readonly productsRepository: ProductsRepository) {}
+  constructor(private productsRepository: ProductsRepository) {}
 
   async execute(): Promise<FetchRecentProductsServiceResponse> {
-    const recentProducts = await this.productsRepository.findManyRecent();
-    return { products: recentProducts };
+    const products = await this.productsRepository.findManyRecent();
+
+    const newProducts: Product[] = [];
+
+    if (!products) {
+      throw new Error("Products not found");
+    }
+
+    for (const product of products) {
+      newProducts.push({
+        id: product.id?.toString() || "",
+        name: product.name,
+        description: product.description as string,
+        price: product.price,
+        inStock: product.inStock,
+        isAvailable: !!product.isAvailable,
+        category: product.category,
+        tags: product.tags as string[],
+        createdAt: product.createdAt,
+        updatedAt: product.updatedAt,
+      });
+    }
+
+    return {
+      products: newProducts
+    };
   }
 }

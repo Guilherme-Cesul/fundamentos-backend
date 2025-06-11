@@ -1,5 +1,5 @@
-import { ModelsRepository } from "./models.repository";
 import { Injectable } from "@nestjs/common";
+import { ModelsRepository } from "./models.repository";
 
 export interface Model {
   id: string;
@@ -10,14 +10,32 @@ export interface Model {
 
 type FetchRecentModelsServiceResponse = {
   models: Model[];
-};
+}
 
 @Injectable()
 export class FetchRecentModelsService {
-  constructor(private readonly modelsRepository: ModelsRepository) {}
+  constructor(private modelsRepository: ModelsRepository) {}
 
   async execute(): Promise<FetchRecentModelsServiceResponse> {
-    const recentModels = await this.modelsRepository.findMany();
-    return { models: recentModels };
+    const models = await this.modelsRepository.findManyRecent();
+
+    const newModels: Model[] = [];
+
+    if (!models) {
+      throw new Error("Models not found");
+    }
+
+    for (const model of models) {
+      newModels.push({
+        id: model.id?.toString() || "",
+        name: model.name,
+        createdAt: model.createdAt,
+        updatedAt: model.updatedAt,
+      });
+    }
+
+    return {
+      models: newModels
+    };
   }
 }

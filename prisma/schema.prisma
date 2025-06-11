@@ -32,7 +32,8 @@ model Product {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
 
-  orderItems OrderItem[]
+  orderItems OrderItem[] // 1:N
+  models Model[] @relation("product_models")
 
   @@map("products")
 }
@@ -101,6 +102,8 @@ model Model {
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
+
+  product Product[] @relation("product_models")
 
   @@map("models")
 }
