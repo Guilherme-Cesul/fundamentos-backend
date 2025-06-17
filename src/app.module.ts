@@ -23,6 +23,10 @@ import { FetchRecentUsersService } from "./users/fetch-recent-users.service";
 import { DeleteUserController } from "./users/delete-user.controller";
 import { GetUserByIdService } from "./users/get-user-by-id.service";
 import { GetUserByIdController } from "./users/get-user-by-id.controller";
+import { UpdateAvailableProductController } from "./products/update-available-product.controller";
+import { UpdateAvailableProductService } from "./products/update-available-product.service";
+import { EditUserService } from "./users/edit-user.service";
+import { EditUserController } from "./users/edit-user.controller";
 
 @Module({
   imports: [],
@@ -32,11 +36,13 @@ import { GetUserByIdController } from "./users/get-user-by-id.controller";
     FetchRecentProductsController,
     FetchRecentModelsController,
     DeleteProductController,
+    UpdateAvailableProductController,
     GetProductByIdController,
     CreateUserController,
     FetchRecentUsersController,
     GetUserByIdController,
     DeleteUserController,
+    EditUserController,
   ],
   providers: [
     PrismaService,
@@ -48,11 +54,13 @@ import { GetUserByIdController } from "./users/get-user-by-id.controller";
     FetchRecentProductsService,
     FetchRecentModelsService,
     DeleteProductService,
+    UpdateAvailableProductService,
     GetProductByIdService,
     CreateUserService,
     FetchRecentUsersService,
     GetUserByIdService,
     DeleteUserService,
+    EditUserService,
   ],
 })
 export class AppModule {}
