@@ -46,6 +46,7 @@ export class ProductsRepository {
   async create(product: Prisma.ProductUncheckedCreateInput): Promise<Prisma.ProductUncheckedCreateInput> {
     return await this.prisma.product.create({
       data: product,
+ 
     });
   }
 

@@ -27,6 +27,8 @@ import { UpdateAvailableProductController } from "./products/update-available-pr
 import { UpdateAvailableProductService } from "./products/update-available-product.service";
 import { EditUserService } from "./users/edit-user.service";
 import { EditUserController } from "./users/edit-user.controller";
+import { EditProductController } from "./products/edit-product.controller";
+import { EditProductService } from "./products/edit-product.service";
 
 @Module({
   imports: [],
@@ -37,6 +39,7 @@ import { EditUserController } from "./users/edit-user.controller";
     FetchRecentModelsController,
     DeleteProductController,
     UpdateAvailableProductController,
+    EditProductController,
     GetProductByIdController,
     CreateUserController,
     FetchRecentUsersController,
@@ -55,6 +58,7 @@ import { EditUserController } from "./users/edit-user.controller";
     FetchRecentModelsService,
     DeleteProductService,
     UpdateAvailableProductService,
+    EditProductService,
     GetProductByIdService,
     CreateUserService,
     FetchRecentUsersService,
