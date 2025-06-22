@@ -14,10 +14,11 @@ export class ProfileRepository {
   }
 
   async findById(id: string): Promise<any> {
-    return await this.prisma.profile.findUnique({
-      where: {
-        id,
-      },
-    });
+  return await this.prisma.profile.findUnique({
+    where: { id },
+    include: {
+      user: true,
+    },
+  });
   }
 }

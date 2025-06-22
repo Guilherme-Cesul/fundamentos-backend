@@ -38,6 +38,8 @@ import { CreateProfileService } from "./profiles/create-profile.service";
 import { GetModelByIdService } from "./models/get-model-by-id.service";
 import { DeleteModelService } from "./models/delete-model.service";
 import { EditModelService } from "./models/edit-model.service";
+import { GetProfileByIdController } from "./profiles/get-profile-by-id.controller";
+import { GetProfileByIdService } from "./profiles/get-profile-by-id.service";
 
 @Module({
   imports: [],
@@ -52,6 +54,7 @@ import { EditModelService } from "./models/edit-model.service";
     GetProductByIdController,
     GetModelByIdController,
     GetUserByIdController,
+    GetProfileByIdController,
     DeleteProductController,
     DeleteModelController,
     DeleteUserController,
@@ -76,6 +79,7 @@ import { EditModelService } from "./models/edit-model.service";
     GetProductByIdService,
     GetModelByIdService,
     GetUserByIdService,
+    GetProfileByIdService,
     DeleteProductService,
     DeleteModelService,
     DeleteUserService,
