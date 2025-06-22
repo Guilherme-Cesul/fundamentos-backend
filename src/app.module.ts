@@ -29,41 +29,59 @@ import { EditUserService } from "./users/edit-user.service";
 import { EditUserController } from "./users/edit-user.controller";
 import { EditProductController } from "./products/edit-product.controller";
 import { EditProductService } from "./products/edit-product.service";
+import { ProfileRepository } from "./profiles/profiles.repository";
+import { CreateProfileController } from "./profiles/create-profile.controller";
+import { DeleteModelController } from "./models/delete-model.controller";
+import { GetModelByIdController } from "./models/get-model-by-id.controller";
+import { EditModelController } from "./models/edit-model.controller";
+import { CreateProfileService } from "./profiles/create-profile.service";
+import { GetModelByIdService } from "./models/get-model-by-id.service";
+import { DeleteModelService } from "./models/delete-model.service";
+import { EditModelService } from "./models/edit-model.service";
 
 @Module({
   imports: [],
   controllers: [
     CreateProductController,
     CreateModelController,
+    CreateUserController,
+    CreateProfileController,
     FetchRecentProductsController,
     FetchRecentModelsController,
+    FetchRecentUsersController,
+    GetProductByIdController,
+    GetModelByIdController,
+    GetUserByIdController,
     DeleteProductController,
+    DeleteModelController,
+    DeleteUserController,
     UpdateAvailableProductController,
     EditProductController,
-    GetProductByIdController,
-    CreateUserController,
-    FetchRecentUsersController,
-    GetUserByIdController,
-    DeleteUserController,
+    EditModelController,
     EditUserController,
   ],
   providers: [
     PrismaService,
+    ProductsRepository,
     ModelsRepository,
     UsersRepository,
-    ProductsRepository,
+    ProfileRepository,
     CreateProductService,
     CreateModelService,
+    CreateUserService,
+    CreateProfileService,
     FetchRecentProductsService,
     FetchRecentModelsService,
+    FetchRecentUsersService,
+    GetProductByIdService,
+    GetModelByIdService,
+    GetUserByIdService,
     DeleteProductService,
+    DeleteModelService,
+    DeleteUserService,
     UpdateAvailableProductService,
     EditProductService,
-    GetProductByIdService,
-    CreateUserService,
-    FetchRecentUsersService,
-    GetUserByIdService,
-    DeleteUserService,
+    EditModelService,
     EditUserService,
   ],
 })
