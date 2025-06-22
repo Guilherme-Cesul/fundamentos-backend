@@ -6,6 +6,16 @@ import { PrismaService } from "prisma.service";
 export class ModelsRepository {
   constructor(private prisma: PrismaService) {}
 
+  async findByName(name: string): Promise<Prisma.ModelUncheckedCreateInput | null> {
+    const model = this.prisma.model.findUnique({
+      where: {
+        name,
+      },
+    });
+
+    return model;
+  }
+
   async findManyRecent(): Promise<Prisma.ModelUncheckedCreateInput[] | null> {
     return await this.prisma.model.findMany();
   }
@@ -14,7 +24,7 @@ export class ModelsRepository {
     return await this.prisma.model.findUnique({
       where: {
         id,
-      }
+      },
     });
   }
 
@@ -39,7 +49,7 @@ export class ModelsRepository {
     await this.prisma.model.delete({
       where: {
         id: model.id?.toString(),
-      }
+      },
     });
   }
 }
