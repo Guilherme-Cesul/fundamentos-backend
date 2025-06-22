@@ -40,6 +40,8 @@ import { DeleteModelService } from "./models/delete-model.service";
 import { EditModelService } from "./models/edit-model.service";
 import { GetProfileByIdController } from "./profiles/get-profile-by-id.controller";
 import { GetProfileByIdService } from "./profiles/get-profile-by-id.service";
+import { EditProfileService } from "./profiles/edit-profile.service";
+import { EditProfileController } from "./profiles/edit-profile.controller";
 
 @Module({
   imports: [],
@@ -62,6 +64,7 @@ import { GetProfileByIdService } from "./profiles/get-profile-by-id.service";
     EditProductController,
     EditModelController,
     EditUserController,
+    EditProfileController,
   ],
   providers: [
     PrismaService,
@@ -87,6 +90,7 @@ import { GetProfileByIdService } from "./profiles/get-profile-by-id.service";
     EditProductService,
     EditModelService,
     EditUserService,
+    EditProfileService,
   ],
 })
 export class AppModule {}
