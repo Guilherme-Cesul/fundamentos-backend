@@ -6,7 +6,7 @@ import { PrismaService } from "prisma.service";
 export class UsersRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findByName(email: string): Promise<Prisma.UserUncheckedCreateInput | null> {
+  async findByEmail(email: string): Promise<Prisma.UserUncheckedCreateInput | null> {
     const user = this.prisma.user.findUnique({
       where: {
         email,

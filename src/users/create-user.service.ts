@@ -1,14 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { UsersRepository } from "./users.repository";
 
-
-export interface User {
-    id:    string;
-    email: string;
-    createdAt: string | Date | undefined;
-    updatedAt: string | Date | null | undefined;
-}
-
 interface CreateUserServiceRequest {
     email: string;
 }
@@ -22,9 +14,9 @@ export class CreateUserService {
         email,
 
     }: CreateUserServiceRequest): Promise<void> {
-        const userWithSameName = await this.usersRepository.findByName(email);
+        const userWithSameEmail = await this.usersRepository.findByEmail(email);
 
-        if (userWithSameName) {
+        if (userWithSameEmail) {
             throw new BadRequestException("User with this email already exists.");
         }
 

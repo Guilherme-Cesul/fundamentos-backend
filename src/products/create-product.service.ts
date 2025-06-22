@@ -1,19 +1,7 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { ProductsRepository } from "./products.repository";
 import { Category } from "@prisma/client";
-
-export interface Product {
-  id: string;
-  name: string;
-  description?: string;
-  price: number;
-  inStock: number;
-  isAvailable: Boolean;
-  category: Category;
-  tags: string[];
-  createdAt: string | Date | undefined;
-  updatedAt: string | Date | null | undefined;
-}
+import { ModelsRepository } from "src/models/models.repository";
 
 interface CreateProductServiceRequest {
   name: string;
@@ -23,15 +11,15 @@ interface CreateProductServiceRequest {
   isAvailable: boolean;
   category: Category;
   tags: string[];
+  modelId: string;
 }
-
-type CreateProductServiceResponse = {
-  product: Product;
-};
 
 @Injectable()
 export class CreateProductService {
-  constructor(private productsRepository: ProductsRepository) {}
+  constructor(
+    private productsRepository: ProductsRepository,
+    private modelsRepository: ModelsRepository
+  ) {}
 
   async execute({
     name,
@@ -41,14 +29,21 @@ export class CreateProductService {
     isAvailable,
     category,
     tags,
-  }: CreateProductServiceRequest): Promise<CreateProductServiceResponse> {
+    modelId,
+  }: CreateProductServiceRequest): Promise<void> {
     const productWithSameName = await this.productsRepository.findByName(name);
 
     if (productWithSameName) {
       throw new BadRequestException("Product with same name already exists.");
     }
 
-    const product = {
+    const model = await this.modelsRepository.findById(modelId);
+
+    if (!model) {
+      throw new BadRequestException("Model does not exist.");
+    }
+
+    await this.productsRepository.create({
       name,
       description,
       price,
@@ -56,23 +51,9 @@ export class CreateProductService {
       isAvailable,
       category,
       tags,
-    };
-
-    const newProduct = await this.productsRepository.create(product);
-
-    return {
-      product: {
-        id: newProduct.id?.toString() || "",
-        name,
-        description,
-        price,
-        inStock,
-        isAvailable,
-        category,
-        tags,
-        createdAt: newProduct.createdAt,
-        updatedAt: newProduct.updatedAt,
+      models: {
+        connect: { id: modelId },
       },
-    };
+    });
   }
 }
