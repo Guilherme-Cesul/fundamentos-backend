@@ -6,22 +6,25 @@ import { PrismaService } from "prisma.service";
 export class ProductsRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findManyRecent(): Promise<Prisma.ProductUncheckedCreateInput[] | null> {
-    const products = this.prisma.product.findMany();
-
-    return products;
-  }
-
-  async findById(
-    id: string
-  ): Promise<Prisma.ProductUncheckedCreateInput | null> {
-    const product = this.prisma.product.findUnique({
-      where: {
-        id,
+  async findManyRecent(): Promise<any> {
+    return await this.prisma.product.findMany({
+      include: {
+        models: {
+          select: { name: true }
+        },
       },
     });
+  }
 
-    return product;
+  async findById(id: string): Promise<any> {
+    return await this.prisma.product.findUnique({
+      where: { id },
+      include: {
+        models: {
+          select: { name: true }
+        },
+      },
+    });
   }
 
   async findByName(

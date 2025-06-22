@@ -11,6 +11,7 @@ export interface Product {
   isAvailable: Boolean;
   category: Category;
   tags: string[];
+  modelsIds: string[];
   createdAt: string | Date | undefined;
   updatedAt: string | Date | null | undefined;
 }
@@ -42,6 +43,7 @@ export class FetchRecentProductsService {
         isAvailable: !!product.isAvailable,
         category: product.category,
         tags: product.tags as string[],
+        modelsIds: product.models as string[],
         createdAt: product.createdAt,
         updatedAt: product.updatedAt,
       });
