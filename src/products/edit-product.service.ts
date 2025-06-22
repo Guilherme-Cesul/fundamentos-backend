@@ -1,21 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { ModelsRepository } from "src/models/models.repository";
 import { ProductsRepository } from "./products.repository";
 import { Category } from "@prisma/client";
 
-export interface Product {
-  id: string;
-  name: string;
-  description?: string;
-  price: number;
-  inStock: number;
-  isAvailable: Boolean;
-  category: Category;
-  tags: string[];
-  createdAt: string | Date | undefined;
-  updatedAt: string | Date | null | undefined;
-}
-
 interface EditProductServiceRequest {
+  id: string;
   name: string;
   description?: string;
   price: number;
@@ -23,18 +12,18 @@ interface EditProductServiceRequest {
   isAvailable: boolean;
   category: Category;
   tags: string[];
-  id: string;
-}
-
-type EditProductServiceResponse = {
-  product: Product;
+  modelsIds?: string[];
 }
 
 @Injectable()
 export class EditProductService {
-  constructor(private productsRepository: ProductsRepository) {}
+  constructor(
+    private productsRepository: ProductsRepository,
+    private modelsRepository: ModelsRepository
+  ) {}
 
   async execute({
+    id,
     name,
     description,
     price,
@@ -42,39 +31,24 @@ export class EditProductService {
     isAvailable,
     category,
     tags,
-    id,
-  }: EditProductServiceRequest): Promise<EditProductServiceResponse> {
+    modelsIds,
+  }: EditProductServiceRequest): Promise<void> {
     const product = await this.productsRepository.findById(id);
 
     if (!product) {
-      throw new NotFoundException("Product not found.");
+      throw new NotFoundException("Product not found");
     }
 
-    product.name = name;
-    product.description = description;
-    product.price = price;
-    product.inStock = inStock;
-    product.isAvailable = isAvailable;
-    product.category = category;
-    product.tags = tags;
-
-    await this.productsRepository.save(product);
-
-    const newProduct: Product = {
-      id: product.id?.toString() || "",
-      name: product.name,
-      description: product.description as string,
-      price: product.price,
-      inStock: product.inStock,
-      isAvailable: !!product.isAvailable,
-      category: product.category,
-      tags: product.tags as string[],
-      createdAt: product.createdAt,
-      updatedAt: product.updatedAt,
-    };
-
-    return {
-      product: newProduct
-    };
+    await this.productsRepository.save({
+      id,
+      name,
+      description,
+      price,
+      inStock,
+      isAvailable,
+      category,
+      tags,
+      modelsIds, 
+    });
   }
 }

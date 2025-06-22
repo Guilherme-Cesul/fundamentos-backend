@@ -12,6 +12,7 @@ const editProductBodySchema = z.object({
   isAvailable: z.boolean(),
   category: z.enum([Category.ELECTRONIC, Category.HOME, Category.OTHER]),
   tags: z.array(z.string()),
+  modelsIds: z.array(z.string()).optional(),
 });
 
 const bodyValidationPipe = new ZodValidationPipe(editProductBodySchema);
@@ -36,6 +37,7 @@ export class EditProductController {
       isAvailable,
       category,
       tags,
+      modelsIds,
     } = body;
 
     const product = await this.editProduct.execute({
@@ -47,6 +49,7 @@ export class EditProductController {
       category,
       tags,
       id,
+      modelsIds,
     });
 
     return {
