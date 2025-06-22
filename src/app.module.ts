@@ -42,6 +42,8 @@ import { GetProfileByIdController } from "./profiles/get-profile-by-id.controlle
 import { GetProfileByIdService } from "./profiles/get-profile-by-id.service";
 import { EditProfileService } from "./profiles/edit-profile.service";
 import { EditProfileController } from "./profiles/edit-profile.controller";
+import { DeleteProfileController } from "./profiles/delete-profile.controller";
+import { DeleteProfileService } from "./profiles/delete-profile.service";
 
 @Module({
   imports: [],
@@ -60,6 +62,7 @@ import { EditProfileController } from "./profiles/edit-profile.controller";
     DeleteProductController,
     DeleteModelController,
     DeleteUserController,
+    DeleteProfileController,
     UpdateAvailableProductController,
     EditProductController,
     EditModelController,
@@ -86,6 +89,7 @@ import { EditProfileController } from "./profiles/edit-profile.controller";
     DeleteProductService,
     DeleteModelService,
     DeleteUserService,
+    DeleteProfileService,
     UpdateAvailableProductService,
     EditProductService,
     EditModelService,

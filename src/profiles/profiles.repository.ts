@@ -31,4 +31,12 @@ export class ProfileRepository {
       }),
     ]);
   }
+
+    async delete(profile: Prisma.ProfileUncheckedCreateInput): Promise<void> {
+    await this.prisma.profile.delete({
+      where: {
+        id: profile.id?.toString(),
+      }
+    });
+  }
 }
