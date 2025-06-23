@@ -6,38 +6,39 @@ import { PrismaService } from "prisma.service";
 export class UsersRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findByEmail(email: string): Promise<Prisma.UserUncheckedCreateInput | null> {
+  async findByEmail(
+    email: string
+  ): Promise<Prisma.UserUncheckedCreateInput | null> {
     const user = this.prisma.user.findUnique({
       where: {
         email,
-      }
+      },
     });
 
     return user;
   }
 
-  async findById(id: string): Promise<Prisma.UserUncheckedCreateInput | null> {
-    const user = this.prisma.user.findUnique({
-      where: {
-        id,
-      }
+  async findById(id: string): Promise<any> {
+    return await this.prisma.user.findUnique({
+      where: { id },
+      include: {
+        profile: true,
+      },
     });
-
-    return user;
   }
 
-  async save(data: Prisma.UserUncheckedCreateInput): Promise<void> {
-    await Promise.all([
-      this.prisma.product.update({
-        where: {
-          id: data.id?.toString(),
-        },
-        data,
-      }),
-    ]);
-  }
+async save(data: Prisma.UserUncheckedCreateInput): Promise<void> {
+  const { profile, ...userData } = data; 
 
-  async create(user: Prisma.UserUncheckedCreateInput): Promise<Prisma.UserUncheckedCreateInput> {
+  await this.prisma.user.update({
+    where: { id: userData.id?.toString() },
+    data: userData,
+  });
+}
+
+  async create(
+    user: Prisma.UserUncheckedCreateInput
+  ): Promise<Prisma.UserUncheckedCreateInput> {
     return await this.prisma.user.create({
       data: user,
     });
@@ -53,8 +54,7 @@ export class UsersRepository {
     await this.prisma.user.delete({
       where: {
         id: user.id?.toString(),
-      }
+      },
     });
   }
-
 }
