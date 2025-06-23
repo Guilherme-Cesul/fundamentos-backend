@@ -44,6 +44,9 @@ import { EditProfileService } from "./profiles/edit-profile.service";
 import { EditProfileController } from "./profiles/edit-profile.controller";
 import { DeleteProfileController } from "./profiles/delete-profile.controller";
 import { DeleteProfileService } from "./profiles/delete-profile.service";
+import { OrdersRepository } from "./orders/orders.repository";
+import { CreateOrderService } from "./orders/create-orders.service";
+import { CreateOrderController } from "./orders/create-orders.controller";
 
 @Module({
   imports: [],
@@ -51,6 +54,7 @@ import { DeleteProfileService } from "./profiles/delete-profile.service";
     CreateProductController,
     CreateModelController,
     CreateUserController,
+    CreateOrderController,
     CreateProfileController,
     FetchRecentProductsController,
     FetchRecentModelsController,
@@ -75,10 +79,12 @@ import { DeleteProfileService } from "./profiles/delete-profile.service";
     ModelsRepository,
     UsersRepository,
     ProfileRepository,
+    OrdersRepository,
     CreateProductService,
     CreateModelService,
     CreateUserService,
     CreateProfileService,
+    CreateOrderService,
     FetchRecentProductsService,
     FetchRecentModelsService,
     FetchRecentUsersService,
