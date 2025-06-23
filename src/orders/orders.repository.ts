@@ -22,4 +22,17 @@ export class OrdersRepository {
       },
     });
   }
+
+  async findByUserId(userId: string) {
+    return this.prisma.order.findMany({
+      where: { userId },
+      include: {
+        orderItems: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+  }
 }

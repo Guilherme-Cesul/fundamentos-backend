@@ -49,6 +49,9 @@ import { CreateOrderService } from "./orders/create-orders.service";
 import { CreateOrderController } from "./orders/create-orders.controller";
 import { GetOrderByIdController } from "./orders/get-order-by-id.controller";
 import { GetOrderByIdService } from "./orders/get-order-by-id.service";
+import { GetOrderByUserIdController } from "./orders/get-order-by-user-id.controller";
+import { GetOrderByUserIdService } from "./orders/get-order-by-user-id.service";
+
 
 @Module({
   imports: [],
@@ -66,6 +69,7 @@ import { GetOrderByIdService } from "./orders/get-order-by-id.service";
     GetUserByIdController,
     GetOrderByIdController,
     GetProfileByIdController,
+    GetOrderByUserIdController,
     DeleteProductController,
     DeleteModelController,
     DeleteUserController,
@@ -96,6 +100,7 @@ import { GetOrderByIdService } from "./orders/get-order-by-id.service";
     GetUserByIdService,
     GetProfileByIdService,
     GetOrderByIdService,
+    GetOrderByUserIdService,
     DeleteProductService,
     DeleteModelService,
     DeleteUserService,
