@@ -47,6 +47,8 @@ import { DeleteProfileService } from "./profiles/delete-profile.service";
 import { OrdersRepository } from "./orders/orders.repository";
 import { CreateOrderService } from "./orders/create-orders.service";
 import { CreateOrderController } from "./orders/create-orders.controller";
+import { GetOrderByIdController } from "./orders/get-order-by-id.controller";
+import { GetOrderByIdService } from "./orders/get-order-by-id.service";
 
 @Module({
   imports: [],
@@ -62,6 +64,7 @@ import { CreateOrderController } from "./orders/create-orders.controller";
     GetProductByIdController,
     GetModelByIdController,
     GetUserByIdController,
+    GetOrderByIdController,
     GetProfileByIdController,
     DeleteProductController,
     DeleteModelController,
@@ -92,6 +95,7 @@ import { CreateOrderController } from "./orders/create-orders.controller";
     GetModelByIdService,
     GetUserByIdService,
     GetProfileByIdService,
+    GetOrderByIdService,
     DeleteProductService,
     DeleteModelService,
     DeleteUserService,
